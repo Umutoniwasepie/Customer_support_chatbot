@@ -5,10 +5,38 @@ import streamlit as st
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import torch
 import re
+import gdown
+
+# Function to download a folder from Google Drive as a zip and extract it
+def download_folder_from_drive(folder_id, output_dir):
+    """Download a Google Drive folder, zip it temporarily, extract, and clean up."""
+    # Generate a temporary zip URL for the folder (gdown handles folder IDs as zips)
+    url = f"https://drive.google.com/drive/folders/{folder_id}"
+    zip_path = f"{output_dir}.zip"
+    gdown.download_folder(url, output=zip_path, quiet=False, use_cookies=False)
+    
+    # Extract the zip to the desired directory
+    import zipfile
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(os.path.dirname(output_dir))
+    os.remove(zip_path)  # Clean up the zip file
+
+# Google Drive folder ID (from link: https://drive.google.com/drive/folders/1V77zA-4JkDFUXZJcfIK1dDtdIDbPRb8H)
+DRIVE_FOLDER_ID = "1V77zA-4JkDFUXZJcfIK1dDtdIDbPRb8H"
+
+# Download and extract final_model and tokenized_dataset if not already present
+MODEL_PATH = "final_model"
+
+if not os.path.exists(MODEL_PATH):
+    st.info("Downloading final_model folder from Google Drive...")
+    download_folder_from_drive(DRIVE_FOLDER_ID, MODEL_PATH)
+    if not os.path.exists(MODEL_PATH):
+        st.error(f"Model directory '{MODEL_PATH}' not downloaded or extracted correctly.")
+        st.stop()
 
 # Load the model and tokenizer
-tokenizer = T5Tokenizer.from_pretrained("./final_model")
-model = T5ForConditionalGeneration.from_pretrained("./final_model")
+tokenizer = T5Tokenizer.from_pretrained(MODEL_PATH)
+model = T5ForConditionalGeneration.from_pretrained(MODEL_PATH)
 
 def normalize_input(text):
     text = text.lower().strip()
