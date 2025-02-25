@@ -1,11 +1,14 @@
-
-import streamlit as st
-
 # Import the necessary functions
-from transformers import T5Tokenizer, T5ForConditionalGeneration
-import torch
-import re
-import gdown
+import streamlit as st
+try:
+    from transformers import T5Tokenizer, T5ForConditionalGeneration
+    import torch
+    import re
+    import os
+    import gdown
+except ImportError as e:
+    st.error(f"Error importing libraries: {e}. Please ensure 'transformers==4.36.0', 'torch==2.1.2', and 'gdown>=4.6.0' are installed in requirements.txt.")
+    st.stop()
 
 # Function to download a folder from Google Drive as a zip and extract it
 def download_folder_from_drive(folder_id, output_dir):
