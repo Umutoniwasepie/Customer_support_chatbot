@@ -12,11 +12,15 @@ except ImportError as e:
 
 # Function to download a folder from Google Drive as a zip and extract it
 def download_folder_from_drive(folder_id, output_dir):
-    """Download a Google Drive folder, zip it temporarily, extract, and clean up."""
-    # Generate a temporary zip URL for the folder (gdown handles folder IDs as zips)
+    """Download a Google Drive folder and extract its contents directly."""
+    # Generate a URL for the folder (gdown treats folders as zips but extracts to a directory)
     url = f"https://drive.google.com/drive/folders/{folder_id}"
-    zip_path = f"{output_dir}.zip"
-    gdown.download_folder(url, output=zip_path, quiet=False, use_cookies=False)
+    try:
+        # gdown.download_folder() creates a directory with the folder's contents
+        gdown.download_folder(url, output=output_dir, quiet=False, use_cookies=False)
+    except Exception as e:
+        st.error(f"Error downloading from Google Drive: {e}")
+        st.stop()
     
     # Extract the zip to the desired directory
     import zipfile
