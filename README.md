@@ -50,11 +50,11 @@ pip install -r requirements.txt
 
 4.  Run the Chatbot
 ### **Local Execution**
-Run the notebook `chatbot.ipynb` in **Jupyter Notebook** or **Colab** for training and evaluation.  
+Run the notebook in **Jupyter Notebook** or **Colab** for training and evaluation.  
 
-### **Gradio Deployment**
+### **Streamlit Deployment**
 
-Access the **Streamlit** interface via the public URL (`https://xxxx.gradio.live`).  
+Access the **Streamlit** interface via the public URL (`https://xxxx.streamlit.live`).  
 
 
 ## Examples of Conversations
