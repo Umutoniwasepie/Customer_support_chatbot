@@ -20,7 +20,7 @@ def download_folder_from_drive(folder_id, output_dir):
         st.stop()
 
 # Google Drive folder ID
-DRIVE_FOLDER_ID = "1V77zA-4JkDFUXZJcfIK1dDtdIDbPRb8H"
+DRIVE_FOLDER_ID = "10YOHPxJq80tP_pMmMOA__0BzRDLcZ5XG"
 
 # Define model and dataset paths
 MODEL_PATH = "final_model"
