@@ -36,8 +36,9 @@ if not os.path.exists(MODEL_PATH):
 
 # Load the model and tokenizer
 try:
-    tokenizer = T5Tokenizer.from_pretrained(MODEL_PATH)
-    model = T5ForConditionalGeneration.from_pretrained(MODEL_PATH)
+    tokenizer = T5Tokenizer.from_pretrained(MODEL_PATH, local_files_only=True)
+    model = T5ForConditionalGeneration.from_pretrained(MODEL_PATH, local_files_only=True)
+
 except Exception as e:
     st.error(f"Error loading model or tokenizer: {e}")
     st.stop()
