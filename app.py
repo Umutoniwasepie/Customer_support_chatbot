@@ -34,19 +34,25 @@ def test_query(query):
     query_lower = normalize_input(query)
     input_text = f"generate response: Current query: {query_lower}"
     
+    print(f"DEBUG: Input to Model -> {input_text}")  # Debugging
+
     input_ids = tokenizer(input_text, return_tensors="pt", truncation=True, padding="max_length", max_length=128).input_ids
-    
+
     with torch.no_grad():
         output_ids = model.generate(
             input_ids,
-            max_length=200,  # Ensure full response
+            max_length=200,  
             temperature=0.8,
             top_p=0.9,
             repetition_penalty=1.5
         )
-    
-    response = tokenizer.decode(output_ids[0], skip_special_tokens=True).strip()  # Ensure no blank spaces
+
+    response = tokenizer.decode(output_ids[0], skip_special_tokens=True).strip()
+
+    print(f"DEBUG: Raw Model Output -> {response}")  # Debugging
+
     return capitalize_response(response) if response else "No response generated!"
+
 
 # Streamlit UI
 st.title("Customer Support Chatbot")
