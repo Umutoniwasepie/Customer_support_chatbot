@@ -1,5 +1,7 @@
 # Customer_support_chatbot
 
+![Screenshot 2025-02-26 114540](https://github.com/user-attachments/assets/90d07be5-9c35-4fed-a3c1-dbe276817b4f)
+
 ## Overview
 Customer support plays a crucial role in modern business operations, ensuring user satisfaction and operational efficiency in industries ranging from e-commerce to telecommunications. As customer inquiries grow in volume and complexity, traditional manual response systems become increasingly impractical, leading to long wait times and inconsistencies in support quality. To address this, businesses are turning to AI-powered chatbots that can efficiently handle routine queries.
 
@@ -54,7 +56,7 @@ Run the notebook in **Jupyter Notebook** or **Colab** for training and evaluatio
 
 ### **Streamlit Deployment**
 
-Access the **Streamlit** interface via the public URL (`https://xxxx.streamlit.live`).  
+Access the **Streamlit** interface via the public URL ([https://customersupportchbot.streamlit.app/](https://customersupportchbot.streamlit.app/)).  
 
 
 ## Examples of Conversations
@@ -83,10 +85,10 @@ Here are sample interactions with the chatbot:
 ---
 
 ## Files
-- `chatbot.ipynb`: Colab notebook with code for data preprocessing, model training, evaluation, and Gradio deployment.  
+- `Summative_Customer_support_chatbot.ipynb`: Colab notebook with code for data preprocessing, model training, evaluation, and Gradio deployment.  
 - `intent_distribution.png`: Visualization of intent distribution in the training set.  
 - `loss_comparison.png`: Bar chart comparing training losses (2e-5 vs. 5e-5).  
-- `tokenized_dataset.zip`: Preprocessed Bitext dataset for training.  
-- `final_model.zip`: Trained T5-small model and tokenizer.  
+- `tokenized_dataset`: Preprocessed Bitext dataset for training.  
+- `final_model`: Trained T5-small model and tokenizer.  
 - `requirements.txt`: Python dependencies for the project.  
 
