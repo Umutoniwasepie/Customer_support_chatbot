@@ -4,17 +4,12 @@ import torch
 import re
 
 # Load the model and tokenizer
-MODEL_NAME = "Umutoniwasepie/final_model"
+MODEL_NAME= "Umutoniwasepie/final_model"
 
-@st.cache_resource
-def load_model():
-    tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME)
-    model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME)
-    return tokenizer, model
+# Load the model and tokenizer
+tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME)
+model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME)
 
-tokenizer, model = load_model()
-
-# Text preprocessing functions
 def normalize_input(text):
     text = text.lower().strip()
     text = re.sub(r'\s+', ' ', text)
@@ -29,10 +24,9 @@ def capitalize_response(response):
             unique_sentences.append(s.capitalize())
     return ". ".join(unique_sentences)
 
-def generate_response(query):
+def test_query(query):
     query_lower = normalize_input(query)
     input_text = f"generate response: Current query: {query_lower}"
-    
     input_ids = tokenizer(input_text, return_tensors="pt", truncation=True, padding="max_length", max_length=128).input_ids
     with torch.no_grad():
         output_ids = model.generate(
@@ -47,7 +41,7 @@ def generate_response(query):
 
 # Streamlit app layout
 st.title("Customer Support Chatbot 🤖")
-st.write("Ask me any customer support-related question!")
+st.write("Ask me any customer support-related question!...I do have my limits(I'm still in the learning face)")
 
 user_input = st.text_input("You:", "")
 
