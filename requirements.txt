@@ -1,9 +1,8 @@
-transformers
-torch
-datasets
-tokenizers
-scikit-learn
-matplotlib
-streamlit
-gradio
-pyngrok
+streamlit==1.42.2
+transformers>=4.36.0
+torch==2.2.2
+torchvision 
+torchaudio 
+numpy<2 
+gdown>=4.6.0
+sentencepiece  # Required for T5Tokenizer
