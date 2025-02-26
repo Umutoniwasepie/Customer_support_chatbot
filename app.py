@@ -31,26 +31,22 @@ def capitalize_response(response):
     return ". ".join(unique_sentences)
 
 def test_query(query):
-    """Generates a response using the model."""
     query_lower = normalize_input(query)
     input_text = f"generate response: Current query: {query_lower}"
     
-    input_ids = tokenizer(
-        input_text, return_tensors="pt", truncation=True, 
-        padding="max_length", max_length=128
-    ).input_ids
-
+    input_ids = tokenizer(input_text, return_tensors="pt", truncation=True, padding="max_length", max_length=128).input_ids
+    
     with torch.no_grad():
         output_ids = model.generate(
             input_ids,
-            max_length=200,
+            max_length=200,  # Ensure full response
             temperature=0.8,
-            top_k=70,
+            top_p=0.9,
             repetition_penalty=1.5
         )
-
-    response = tokenizer.decode(output_ids[0], skip_special_tokens=True)
-    return capitalize_response(response)
+    
+    response = tokenizer.decode(output_ids[0], skip_special_tokens=True).strip()  # Ensure no blank spaces
+    return capitalize_response(response) if response else "No response generated!"
 
 # Streamlit UI
 st.title("Customer Support Chatbot")
