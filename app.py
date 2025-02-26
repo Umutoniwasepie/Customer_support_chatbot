@@ -4,7 +4,7 @@ import torch
 import re
 
 # Load the model and tokenizer from Hugging Face Hub
-MODEL_NAME = "Umutoniwasepie/final_model"
+MODEL_NAME = "Umutoniwasepie/final_model/tree/main/final_model"
 
 @st.cache_resource  # Cache the model to avoid reloading on every run
 def load_model():
