@@ -3,3 +3,4 @@ transformers==4.36.0
 torch==2.2.2 
 gdown>=4.6.0
 sentencepiece
+numpy<2
