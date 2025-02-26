@@ -46,7 +46,8 @@ st.write("Ask me any customer support-related question!...I do have my limits(I'
 user_input = st.text_input("You:", "")
 
 if st.button("Send"):
-    response = test_query(user_input)
-    st.write(f"**Bot:** {response}")
+    if user_input.strip():
+        response = test_query(user_input)
+        st.write(f"**Bot:** {response}")
     else:
         st.warning("Please enter a valid question.")
