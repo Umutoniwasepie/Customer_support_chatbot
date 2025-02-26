@@ -37,11 +37,20 @@ def test_query(query):
             repetition_penalty=1.5
         )
     response = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+
+    # Debugging: Print input and output  
+    print(f"Input: {input_text}")  
+    print(f"Output: {response}")  
+    
+    # Check for empty response  
+    if not response.strip():  
+        response = "I'm sorry, I didn't understand that. Could you please rephrase?"  
+        
     return capitalize_response(response)
 
 # Streamlit app layout
 st.title("Customer Support Chatbot 🤖")
-st.write("Ask me any customer support-related question!...I do have my limits(I'm still in the learning face)")
+st.write("Ask me any customer support-related question!...I do have my limits(I'm still in the learning phace)")
 
 user_input = st.text_input("You:", "")
 
