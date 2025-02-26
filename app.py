@@ -1,6 +1,4 @@
 import streamlit as st
-
-# Import the necessary functions
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import torch
 import re
@@ -9,17 +7,22 @@ import re
 MODEL_NAME = "Umutoniwasepie/final_model"
 
 @st.cache_resource  # Cache the model to avoid reloading on every run
-# Load the model and tokenizer
-tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME)
-model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME)
+def load_model():
+    tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME)
+    model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME)
+    return tokenizer, model
+
+tokenizer, model = load_model()
 
 def normalize_input(text):
+    """Cleans and normalizes user input."""
     text = text.lower().strip()
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'[^\w\s\?.,!]', '', text)
     return text
 
 def capitalize_response(response):
+    """Capitalizes and removes duplicate sentences from the response."""
     sentences = response.split(". ")
     unique_sentences = []
     for s in sentences:
@@ -28,9 +31,15 @@ def capitalize_response(response):
     return ". ".join(unique_sentences)
 
 def test_query(query):
+    """Generates a response using the model."""
     query_lower = normalize_input(query)
     input_text = f"generate response: Current query: {query_lower}"
-    input_ids = tokenizer(input_text, return_tensors="pt", truncation=True, padding="max_length", max_length=128).input_ids
+    
+    input_ids = tokenizer(
+        input_text, return_tensors="pt", truncation=True, 
+        padding="max_length", max_length=128
+    ).input_ids
+
     with torch.no_grad():
         output_ids = model.generate(
             input_ids,
@@ -39,10 +48,11 @@ def test_query(query):
             top_k=70,
             repetition_penalty=1.5
         )
+
     response = tokenizer.decode(output_ids[0], skip_special_tokens=True)
     return capitalize_response(response)
 
-# Streamlit app layout
+# Streamlit UI
 st.title("Customer Support Chatbot")
 user_input = st.text_input("You:", "")
 
