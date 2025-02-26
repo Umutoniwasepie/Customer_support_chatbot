@@ -24,28 +24,29 @@ def capitalize_response(response):
             unique_sentences.append(s.capitalize())
     return ". ".join(unique_sentences)
 
-def test_query(query):
-    query_lower = normalize_input(query)
-    input_text = f"generate response: Current query: {query_lower}"
-    input_ids = tokenizer(input_text, return_tensors="pt", truncation=True, padding="max_length", max_length=128).input_ids
-    with torch.no_grad():
-        output_ids = model.generate(
-            input_ids,
-            max_length=200,
-            temperature=0.8,
-            top_k=70,
-            repetition_penalty=1.5
-        )
-    response = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+def test_query(query):  
+    query_lower = normalize_input(query)  
+    # Prompt the model succinctly  
+    input_text = f"{query_lower}"  # Simpler prompt  
+    input_ids = tokenizer(input_text, return_tensors="pt", truncation=True, padding="max_length", max_length=128).input_ids  
+    with torch.no_grad():  
+        output_ids = model.generate(  
+            input_ids,  
+            max_length=200,  
+            temperature=0.8,  
+            top_k=70,  
+            repetition_penalty=1.5  
+        )  
+    response = tokenizer.decode(output_ids[0], skip_special_tokens=True)  
 
     # Debugging: Print input and output  
     print(f"Input: {input_text}")  
     print(f"Output: {response}")  
-    
+
     # Check for empty response  
     if not response.strip():  
         response = "I'm sorry, I didn't understand that. Could you please rephrase?"  
-        
+    
     return capitalize_response(response)
 
 # Streamlit app layout
